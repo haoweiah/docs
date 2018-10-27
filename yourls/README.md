@@ -18,7 +18,8 @@ WARNING:
 
 -	[`1.7.2-apache`, `1.7-apache`, `1-apache`, `apache`, `1.7.2`, `1.7`, `1`, `latest` (*1.7.2/apache/Dockerfile*)](https://github.com/YOURLS/docker-yourls/blob/6d66e2a1f1bebd2faee9ac97b8c1d449e6d80f99/1.7.2/apache/Dockerfile)
 -	[`1.7.2-fpm`, `1.7-fpm`, `1-fpm`, `fpm` (*1.7.2/fpm/Dockerfile*)](https://github.com/YOURLS/docker-yourls/blob/6d66e2a1f1bebd2faee9ac97b8c1d449e6d80f99/1.7.2/fpm/Dockerfile)
--	[`1.7.2-fpm-alpine`, `1.7-fpm-alpine`, `1-fpm-alpine`, `fpm-alpine` (*1.7.2/fpm-alpine/Dockerfile*)](https://github.com/YOURLS/docker-yourls/blob/6d66e2a1f1bebd2faee9ac97b8c1d449e6d80f99/1.7.2/fpm-alpine/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v7/job/yourls/badge/icon) (`arm32v7/yourls` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v7/job/yourls/)
 
 # Quick reference
 
@@ -61,7 +62,7 @@ YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener
 ```console
 $ docker run --name some-yourls --link some-mysql:mysql \
     -e YOURLS_SITE="https://example.com" \
-    -d yourls
+    -d arm32v7/yourls
 ```
 
 The following environment variables are also honored for configuring your YOURLS instance:
@@ -79,7 +80,7 @@ If the `YOURLS_DB_NAME` specified does not already exist on the given MySQL serv
 If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
 
 ```console
-$ docker run --name some-yourls --link some-mysql:mysql -p 8080:80 -d yourls
+$ docker run --name some-yourls --link some-mysql:mysql -p 8080:80 -d arm32v7/yourls
 ```
 
 Then, access it via `http://localhost:8080` or `http://host-ip:8080` in a browser.
@@ -88,7 +89,7 @@ If you'd like to use an external database instead of a linked `mysql` container,
 
 ```console
 $ docker run --name some-yourlss -e YOURLS_DB_HOST=10.1.2.3:3306 \
-    -e YOURLS_DB_USER=... -e YOURLS_DB_PASS=... -d yourls
+    -e YOURLS_DB_USER=... -e YOURLS_DB_PASS=... -d arm32v7/yourls
 ```
 
 ## ... via [`docker stack deploy`](https://docs.docker.com/engine/reference/commandline/stack_deploy/) or [`docker-compose`](https://github.com/docker/compose)
@@ -130,22 +131,6 @@ The following Docker Hub features can help with the task of keeping your depende
 
 -	[Automated Builds](https://docs.docker.com/docker-hub/builds/) let Docker Hub automatically build your Dockerfile each time you push changes to it.
 -	[Repository Links](https://docs.docker.com/docker-hub/builds/#repository-links) can ensure that your image is also rebuilt any time `yourls` is updated.
-
-# Image Variants
-
-The `yourls` images come in many flavors, each designed for a specific use case.
-
-## `yourls:<version>`
-
-This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
-
-## `yourls:<version>-alpine`
-
-This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
-
-This variant is highly recommended when final image size being as small as possible is desired. The main caveat to note is that it does use [musl libc](http://www.musl-libc.org) instead of [glibc and friends](http://www.etalabs.net/compare_libcs.html), so certain software might run into issues depending on the depth of their libc requirements. However, most software doesn't have an issue with this, so this variant is usually a very safe choice. See [this Hacker News comment thread](https://news.ycombinator.com/item?id=10782897) for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
-
-To minimize image size, it's uncommon for additional related tools (such as `git` or `bash`) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [`alpine` image description](https://hub.docker.com/_/alpine/) for examples of how to install packages if you are unfamiliar).
 
 # License
 

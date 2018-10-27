@@ -19,9 +19,7 @@ WARNING:
 -	[`4.10.2-jdk7`, `4.10-jdk7`, `jdk7` (*jdk7/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk7/Dockerfile)
 -	[`4.10.2-jre7`, `4.10-jre7`, `jre7` (*jre7/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre7/Dockerfile)
 -	[`4.10.2-jdk7-alpine`, `4.10-jdk7-alpine`, `jdk7-alpine` (*jdk7-alpine/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk7-alpine/Dockerfile)
--	[`4.10.2-jdk7-slim`, `4.10-jdk7-slim`, `jdk7-slim` (*jdk7-slim/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk7-slim/Dockerfile)
 -	[`4.10.2-jre7-alpine`, `4.10-jre7-alpine`, `jre7-alpine` (*jre7-alpine/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre7-alpine/Dockerfile)
--	[`4.10.2-jre7-slim`, `4.10-jre7-slim`, `jre7-slim` (*jre7-slim/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre7-slim/Dockerfile)
 -	[`4.10.2-jdk8`, `4.10-jdk8`, `jdk8`, `4.10.2-jdk`, `4.10-jdk`, `jdk`, `4.10.2`, `4.10`, `latest` (*jdk8/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk8/Dockerfile)
 -	[`4.10.2-jre8`, `4.10-jre8`, `jre8`, `4.10.2-jre`, `4.10-jre`, `jre` (*jre8/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre8/Dockerfile)
 -	[`4.10.2-jdk8-alpine`, `4.10-jdk8-alpine`, `jdk8-alpine`, `4.10.2-jdk-alpine`, `4.10-jdk-alpine`, `jdk-alpine`, `4.10.2-alpine`, `4.10-alpine`, `alpine` (*jdk8-alpine/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk8-alpine/Dockerfile)
@@ -36,6 +34,8 @@ WARNING:
 -	[`4.10.2-jdk11-slim`, `4.10-jdk11-slim`, `jdk11-slim` (*jdk11-slim/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jdk11-slim/Dockerfile)
 -	[`4.10.2-jre11`, `4.10-jre11`, `jre11` (*jre11/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre11/Dockerfile)
 -	[`4.10.2-jre11-slim`, `4.10-jre11-slim`, `jre11-slim` (*jre11-slim/Dockerfile*)](https://github.com/keeganwitt/docker-gradle/blob/1718fa65873e24d1e003dcd3828755e9fd39fa9d/jre11-slim/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/ppc64le/job/gradle/badge/icon) (`ppc64le/gradle` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/ppc64le/job/gradle/)
 
 # Quick reference
 
@@ -79,19 +79,19 @@ Note that if you are mounting a volume and the uid running Docker is not `1000`,
 
 Run this from the directory of the Gradle project you want to build.
 
-`docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle <gradle-task>`
+`docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project ppc64le/gradle gradle <gradle-task>`
 
 **Note: Java 9 support is experimental**
 
 # Image Variants
 
-The `gradle` images come in many flavors, each designed for a specific use case.
+The `ppc64le/gradle` images come in many flavors, each designed for a specific use case.
 
-## `gradle:<version>`
+## `ppc64le/gradle:<version>`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-## `gradle:<version>-alpine`
+## `ppc64le/gradle:<version>-alpine`
 
 This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 
@@ -99,9 +99,9 @@ This variant is highly recommended when final image size being as small as possi
 
 To minimize image size, it's uncommon for additional related tools (such as `git` or `bash`) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [`alpine` image description](https://hub.docker.com/_/alpine/) for examples of how to install packages if you are unfamiliar).
 
-## `gradle:<version>-slim`
+## `ppc64le/gradle:<version>-slim`
 
-This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run `gradle`. Unless you are working in an environment where *only* the `gradle` image will be deployed and you have space constraints, we highly recommend using the default image of this repository.
+This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run `ppc64le/gradle`. Unless you are working in an environment where *only* the `ppc64le/gradle` image will be deployed and you have space constraints, we highly recommend using the default image of this repository.
 
 # License
 

@@ -16,10 +16,10 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`5.5.0`, `5.5`, `5` (*5/Dockerfile*)](https://github.com/docker-library/gcc/blob/0a7f7464baaa3a24cdd35e1173d84ab94e32a14d/5/Dockerfile)
--	[`6.4.0`, `6.4`, `6` (*6/Dockerfile*)](https://github.com/docker-library/gcc/blob/0a7f7464baaa3a24cdd35e1173d84ab94e32a14d/6/Dockerfile)
 -	[`7.3.0`, `7.3`, `7` (*7/Dockerfile*)](https://github.com/docker-library/gcc/blob/0a7f7464baaa3a24cdd35e1173d84ab94e32a14d/7/Dockerfile)
 -	[`8.2.0`, `8.2`, `8`, `latest` (*8/Dockerfile*)](https://github.com/docker-library/gcc/blob/ca5b263c1028b3a4fbdb8c2d800544ab43d524a0/8/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/ppc64le/job/gcc/badge/icon) (`ppc64le/gcc` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/ppc64le/job/gcc/)
 
 # Quick reference
 
@@ -64,7 +64,7 @@ The GNU Compiler Collection (GCC) is a compiler system produced by the GNU Proje
 The most straightforward way to use this image is to use a gcc container as both the build and runtime environment. In your `Dockerfile`, writing something along the lines of the following will compile and run your project:
 
 ```dockerfile
-FROM gcc:4.9
+FROM ppc64le/gcc:4.9
 COPY . /usr/src/myapp
 WORKDIR /usr/src/myapp
 RUN gcc -o myapp main.c
@@ -83,13 +83,13 @@ $ docker run -it --rm --name my-running-app my-gcc-app
 There may be occasions where it is not appropriate to run your app inside a container. To compile, but not run your app inside the Docker instance, you can write something like:
 
 ```console
-$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:4.9 gcc -o myapp myapp.c
+$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ppc64le/gcc:4.9 gcc -o myapp myapp.c
 ```
 
 This will add your current directory, as a volume, to the container, set the working directory to the volume, and run the command `gcc -o myapp myapp.c.` This tells gcc to compile the code in `myapp.c` and output the executable to myapp. Alternatively, if you have a `Makefile`, you can instead run the `make` command inside your container:
 
 ```console
-$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp gcc:4.9 make
+$ docker run --rm -v "$PWD":/usr/src/myapp -w /usr/src/myapp ppc64le/gcc:4.9 make
 ```
 
 # License

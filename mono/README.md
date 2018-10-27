@@ -16,11 +16,9 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`5.16.0.179`, `latest`, `5.16.0`, `5.16`, `5` (*5.16.0.179/Dockerfile*)](https://github.com/mono/docker/blob/3cb13514d4bfb239a4836b58fc137c7d9dda4da0/5.16.0.179/Dockerfile)
--	[`5.16.0.179-slim`, `slim`, `5.16.0-slim`, `5.16-slim`, `5-slim` (*5.16.0.179/slim/Dockerfile*)](https://github.com/mono/docker/blob/3cb13514d4bfb239a4836b58fc137c7d9dda4da0/5.16.0.179/slim/Dockerfile)
--	[`5.14.0.177`, `5.14.0`, `5.14` (*5.14.0.177/Dockerfile*)](https://github.com/mono/docker/blob/6d9b65ee9c9fe73b5fed6674e8ebe8e0d6f5abaf/5.14.0.177/Dockerfile)
--	[`5.14.0.177-slim`, `5.14.0-slim`, `5.14-slim` (*5.14.0.177/slim/Dockerfile*)](https://github.com/mono/docker/blob/6d9b65ee9c9fe73b5fed6674e8ebe8e0d6f5abaf/5.14.0.177/slim/Dockerfile)
--	[`4.8.0.524`, `4.8.0`, `4.8`, `4` (*4.8.0.524/Dockerfile*)](https://github.com/mono/docker/blob/0d987d93235630e05a14983c7f87500ab33c90da/4.8.0.524/Dockerfile)
+**No supported tags found!**
+
+It is very likely that `mono` does not support the currently selected architecture (`ppc64le`).
 
 # Quick reference
 
@@ -68,7 +66,7 @@ This image will run stand-alone Mono console apps.
 This example Dockerfile will run an executable called `TestingConsoleApp.exe`.
 
 ```dockerfile
-FROM mono:3.10-onbuild
+FROM ppc64le/mono:3.10-onbuild
 CMD [ "mono",  "./TestingConsoleApp.exe" ]
 ```
 
@@ -90,18 +88,6 @@ You should see any output from your app now.
 This Docker image is provided by Xamarin, for users of the Mono Project.
 
 Thanks to [Michael Friis](http://friism.com/) for his preliminary work.
-
-# Image Variants
-
-The `mono` images come in many flavors, each designed for a specific use case.
-
-## `mono:<version>`
-
-This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
-
-## `mono:<version>-slim`
-
-This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run `mono`. Unless you are working in an environment where *only* the `mono` image will be deployed and you have space constraints, we highly recommend using the default image of this repository.
 
 # License
 

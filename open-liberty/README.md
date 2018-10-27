@@ -35,6 +35,8 @@ WARNING:
 -	[`springBoot1`, `springBoot1-java8-ibm` (*library/springBoot1/java8/ibmjava/Dockerfile*)](https://github.com/OpenLiberty/ci.docker/blob/0b035649595dba866fe6bdc159f26a6ec7ae4f40/library/springBoot1/java8/ibmjava/Dockerfile)
 -	[`springBoot1-java8-ibmsfj` (*library/springBoot1/java8/ibmsfj/Dockerfile*)](https://github.com/OpenLiberty/ci.docker/blob/0b035649595dba866fe6bdc159f26a6ec7ae4f40/library/springBoot1/java8/ibmsfj/Dockerfile)
 
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/amd64/job/open-liberty/badge/icon) (`amd64/open-liberty` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/amd64/job/open-liberty/)
+
 # Quick reference
 
 -	**Where to get help**:  
@@ -74,7 +76,7 @@ There are multiple images available in this repository.
 The `kernel` image contains the Liberty kernel and can be used as the basis for custom built images that contain only the features required for a specific application. For example, the following Dockerfile starts with this image, copies in the `server.xml` that lists the features required by the application.
 
 ```dockerfile
-FROM open-liberty:kernel
+FROM amd64/open-liberty:kernel
 COPY server.xml /config/
 ```
 
@@ -116,7 +118,7 @@ The images are designed to support a number of different usage patterns. The fol
 	```console
 	$ docker run -d -p 80:9080 -p 443:9443 \
 	    -v /tmp/DefaultServletEngine/dropins/Sample1.war:/config/dropins/Sample1.war \
-	    open-liberty:webProfile8
+	    amd64/open-liberty:webProfile8
 	```
 
 	When the server is started, you can browse to http://localhost/Sample1/SimpleServlet on the Docker host.
@@ -126,13 +128,13 @@ The images are designed to support a number of different usage patterns. The fol
 	```console
 	$ docker run -d -p 80:9080 \
 	  -v /tmp/DefaultServletEngine:/config \
-	  open-liberty:webProfile8-sfj
+	  amd64/open-liberty:webProfile8-sfj
 	```
 
 3.	You can also build an application layer on top of this image by using either the default server configuration or a new server configuration. In this example, we have copied the `Sample1.war` from `/tmp/DefaultServletEngine/dropins` to the same directory as the following Dockerfile.
 
 	```dockerfile
-	FROM open-liberty:webProfile8
+	FROM amd64/open-liberty:webProfile8
 	COPY Sample1.war /config/dropins/
 	```
 
@@ -148,7 +150,7 @@ The images are designed to support a number of different usage patterns. The fol
 	Build and run the data volume container:
 
 	```dockerfile
-	FROM open-liberty:webProfile8
+	FROM amd64/open-liberty:webProfile8
 	COPY DefaultServletEngine /config
 	```
 
@@ -162,7 +164,7 @@ The images are designed to support a number of different usage patterns. The fol
 
 	```console
 	$ docker run -d -p 80:9080 \
-	  --volumes-from app open-liberty:webProfile8
+	  --volumes-from app amd64/open-liberty:webProfile8
 	```
 
 # Using `springBoot` images
@@ -174,13 +176,13 @@ The `springBoot` images introduce capabilities specific to the support of Spring
 	```console
 	$ docker run -d -p 8080:9080 \
 	    -v /tmp/hellospringboot.jar:/config/dropins/spring/hellospringboot.jar \
-	    open-liberty:springBoot2
+	    amd64/open-liberty:springBoot2
 	```
 
 	Similarly, you can create a Spring Boot application layer over this image by adding the application JAR to the `dropins/spring` directory. In this example we copied `hellospringboot.jar` from `/tmp` to the same directory containing the following Dockerfile.
 
 	```dockerfile
-	FROM open-liberty:springBoot2
+	FROM amd64/open-liberty:springBoot2
 	COPY hellospringboot.jar /config/dropins/spring/
 	```
 
@@ -208,19 +210,19 @@ The `springBoot` images introduce capabilities specific to the support of Spring
 	$ docker run -d -p 8080:9080 \
 	    -v /tmp/thinhellospringboot.jar:/config/dropins/spring/thinhellospringboot.jar \
 	    -v /tmp/lib.index.cache:/lib.index.cache \
-	    open-liberty:springBoot2
+	    amd64/open-liberty:springBoot2
 	```
 
 	Similarly, you can use the `springBootUtility` command to create thin application and library cache layers over a `springBoot` image. The following example uses docker staging to efficiently build an image that deploys a fat Spring Boot application as two layers containing a thin application and a library cache.
 
 	```dockerfile
-	FROM open-liberty:springBoot2 as staging
+	FROM amd64/open-liberty:springBoot2 as staging
 	COPY hellospringboot.jar /staging/myFatApp.jar
 	RUN springBootUtility thin \
 	   --sourceAppPath=/staging/myFatApp.jar \
 	   --targetThinAppPath=/staging/myThinApp.jar \
 	   --targetLibCachePath=/staging/lib.index.cache
-	FROM open-liberty:springBoot2
+	FROM amd64/open-liberty:springBoot2
 	COPY --from=staging /staging/lib.index.cache /lib.index.cache
 	COPY --from=staging /staging/myThinApp.jar /config/dropins/spring/myThinApp.jar
 	```
@@ -258,7 +260,7 @@ Or, create a named data volume container that exposes a volume at the location o
 
 ```console
 docker run -v /opt/ol/wlp//output/.classCache \
-    --name classcache open-liberty true
+    --name classcache amd64/open-liberty true
 ```
 
 Then, run the Open Liberty image with the volumes from the data volume container classcache mounted as follows:
@@ -274,7 +276,7 @@ Liberty writes to two different directories when running: `/opt/ol/wlp//output` 
 ```console
 docker run -d -p 80:9080 -p 443:9443 \
     --tmpfs /opt/ol/wlp//output --tmpfs /logs -v /config --read-only \
-    open-liberty:webProfile8
+    amd64/open-liberty:webProfile8
 ```
 
 # Relationship between Open Liberty and WebSphere Liberty

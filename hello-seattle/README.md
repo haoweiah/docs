@@ -18,22 +18,14 @@ WARNING:
 
 ## Simple Tags
 
--	[`linux` (*amd64/hello-seattle/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/Dockerfile)
--	[`nanoserver-sac2016` (*amd64/hello-seattle/nanoserver-sac2016/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-sac2016/Dockerfile)
--	[`nanoserver-1709` (*amd64/hello-seattle/nanoserver-1709/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1709/Dockerfile)
--	[`nanoserver-1803` (*amd64/hello-seattle/nanoserver-1803/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1803/Dockerfile)
+-	[`linux` (*arm32v5/hello-seattle/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/arm32v5/hello-seattle/Dockerfile)
 
 ## Shared Tags
 
 -	`latest`:
-	-	[`linux` (*amd64/hello-seattle/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/Dockerfile)
-	-	[`nanoserver-sac2016` (*amd64/hello-seattle/nanoserver-sac2016/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-sac2016/Dockerfile)
-	-	[`nanoserver-1709` (*amd64/hello-seattle/nanoserver-1709/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1709/Dockerfile)
-	-	[`nanoserver-1803` (*amd64/hello-seattle/nanoserver-1803/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1803/Dockerfile)
--	`nanoserver`:
-	-	[`nanoserver-sac2016` (*amd64/hello-seattle/nanoserver-sac2016/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-sac2016/Dockerfile)
-	-	[`nanoserver-1709` (*amd64/hello-seattle/nanoserver-1709/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1709/Dockerfile)
-	-	[`nanoserver-1803` (*amd64/hello-seattle/nanoserver-1803/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/amd64/hello-seattle/nanoserver-1803/Dockerfile)
+	-	[`linux` (*arm32v5/hello-seattle/Dockerfile*)](https://github.com/docker-library/hello-world/blob/b715c35271f1d18832480bde75fe17b93db26414/arm32v5/hello-seattle/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v5/job/hello-seattle/badge/icon) (`arm32v5/hello-seattle` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v5/job/hello-seattle/)
 
 # Quick reference
 
@@ -68,7 +60,7 @@ WARNING:
 This image is a vanity variant of [the `hello-world` image](https://hub.docker.com/_/hello-world/) created specifically for [DockerCon 2016](http://2016.dockercon.com/). Its use is discouraged.
 
 ```console
-$ docker run hello-seattle
+$ docker run arm32v5/hello-seattle
 
 Hello from DockerCon 2016 (Seattle)!
 This message shows that your installation appears to be working correctly.

@@ -16,8 +16,6 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`7.0.91-jre7`, `7.0-jre7`, `7-jre7`, `7.0.91`, `7.0`, `7` (*7/jre7/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92855dba2d4edffc55bc04f9b779a0826747ff4c/7/jre7/Dockerfile)
--	[`7.0.91-jre7-slim`, `7.0-jre7-slim`, `7-jre7-slim`, `7.0.91-slim`, `7.0-slim`, `7-slim` (*7/jre7-slim/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92855dba2d4edffc55bc04f9b779a0826747ff4c/7/jre7-slim/Dockerfile)
 -	[`7.0.91-jre7-alpine`, `7.0-jre7-alpine`, `7-jre7-alpine`, `7.0.91-alpine`, `7.0-alpine`, `7-alpine` (*7/jre7-alpine/Dockerfile*)](https://github.com/docker-library/tomcat/blob/e0cfc71038fca93f3e1b54ef4a4db58fb506d5be/7/jre7-alpine/Dockerfile)
 -	[`7.0.91-jre8`, `7.0-jre8`, `7-jre8` (*7/jre8/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92855dba2d4edffc55bc04f9b779a0826747ff4c/7/jre8/Dockerfile)
 -	[`7.0.91-jre8-slim`, `7.0-jre8-slim`, `7-jre8-slim` (*7/jre8-slim/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92855dba2d4edffc55bc04f9b779a0826747ff4c/7/jre8-slim/Dockerfile)
@@ -36,6 +34,8 @@ WARNING:
 -	[`9.0.12-jre10-slim`, `9.0-jre10-slim`, `9-jre10-slim`, `9.0.12-slim`, `9.0-slim`, `9-slim` (*9.0/jre10-slim/Dockerfile*)](https://github.com/docker-library/tomcat/blob/56e65662f0e151aed90bd255aa97a10de17b8316/9.0/jre10-slim/Dockerfile)
 -	[`9.0.12-jre11`, `9.0-jre11`, `9-jre11` (*9.0/jre11/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92bd4324e50c57fc1779ccc97c61aaa53bc0020d/9.0/jre11/Dockerfile)
 -	[`9.0.12-jre11-slim`, `9.0-jre11-slim`, `9-jre11-slim` (*9.0/jre11-slim/Dockerfile*)](https://github.com/docker-library/tomcat/blob/92bd4324e50c57fc1779ccc97c61aaa53bc0020d/9.0/jre11-slim/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/tomcat/badge/icon) (`s390x/tomcat` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/tomcat/)
 
 # Quick reference
 
@@ -78,13 +78,13 @@ Apache Tomcat (or simply Tomcat) is an open source web server and servlet contai
 Run the default Tomcat server (`CMD ["catalina.sh", "run"]`):
 
 ```console
-$ docker run -it --rm tomcat:8.0
+$ docker run -it --rm s390x/tomcat:8.0
 ```
 
 You can test it by visiting `http://container-ip:8080` in a browser or, if you need access outside the host, on port 8888:
 
 ```console
-$ docker run -it --rm -p 8888:8080 tomcat:8.0
+$ docker run -it --rm -p 8888:8080 s390x/tomcat:8.0
 ```
 
 You can then go to `http://localhost:8888` or `http://host-ip:8888` in a browser.
@@ -109,23 +109,23 @@ The configuration files are available in `/usr/local/tomcat/conf/`. By default, 
 
 # Image Variants
 
-The `tomcat` images come in many flavors, each designed for a specific use case.
+The `s390x/tomcat` images come in many flavors, each designed for a specific use case.
 
-## `tomcat:<version>`
+## `s390x/tomcat:<version>`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-## `tomcat:<version>-slim`
-
-This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run `tomcat`. Unless you are working in an environment where *only* the `tomcat` image will be deployed and you have space constraints, we highly recommend using the default image of this repository.
-
-## `tomcat:<version>-alpine`
+## `s390x/tomcat:<version>-alpine`
 
 This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 
 This variant is highly recommended when final image size being as small as possible is desired. The main caveat to note is that it does use [musl libc](http://www.musl-libc.org) instead of [glibc and friends](http://www.etalabs.net/compare_libcs.html), so certain software might run into issues depending on the depth of their libc requirements. However, most software doesn't have an issue with this, so this variant is usually a very safe choice. See [this Hacker News comment thread](https://news.ycombinator.com/item?id=10782897) for more discussion of the issues that might arise and some pro/con comparisons of using Alpine-based images.
 
 To minimize image size, it's uncommon for additional related tools (such as `git` or `bash`) to be included in Alpine-based images. Using this image as a base, add the things you need in your own Dockerfile (see the [`alpine` image description](https://hub.docker.com/_/alpine/) for examples of how to install packages if you are unfamiliar).
+
+## `s390x/tomcat:<version>-slim`
+
+This image does not contain the common packages contained in the default tag and only contains the minimal packages needed to run `s390x/tomcat`. Unless you are working in an environment where *only* the `s390x/tomcat` image will be deployed and you have space constraints, we highly recommend using the default image of this repository.
 
 # License
 

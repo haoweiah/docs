@@ -30,8 +30,8 @@ WARNING:
 -	[`3.0.0-alpha-3-jre8`, `3.0-jre8`, `3.0.0-alpha-3-jre`, `3.0-jre`, `3.0.0-alpha-3`, `3.0` (*jre8/Dockerfile*)](https://github.com/groovy/docker-groovy/blob/390473bcc81d38bde4f1f9520716bc5af0f283ce/jre8/Dockerfile)
 -	[`3.0.0-alpha-3-jdk8-alpine`, `3.0-jdk8-alpine`, `3.0.0-alpha-3-jdk-alpine`, `3.0-jdk-alpine` (*jdk8-alpine/Dockerfile*)](https://github.com/groovy/docker-groovy/blob/390473bcc81d38bde4f1f9520716bc5af0f283ce/jdk8-alpine/Dockerfile)
 -	[`3.0.0-alpha-3-jre8-alpine`, `3.0-jre8-alpine`, `3.0.0-alpha-3-jre-alpine`, `3.0-jre-alpine`, `3.0.0-alpha-3-alpine`, `3.0-alpine` (*jre8-alpine/Dockerfile*)](https://github.com/groovy/docker-groovy/blob/390473bcc81d38bde4f1f9520716bc5af0f283ce/jre8-alpine/Dockerfile)
--	[`3.0.0-alpha-3-jdk10`, `3.0-jdk10` (*jdk10/Dockerfile*)](https://github.com/groovy/docker-groovy/blob/390473bcc81d38bde4f1f9520716bc5af0f283ce/jdk10/Dockerfile)
--	[`3.0.0-alpha-3-jre10`, `3.0-jre10` (*jre10/Dockerfile*)](https://github.com/groovy/docker-groovy/blob/390473bcc81d38bde4f1f9520716bc5af0f283ce/jre10/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/groovy/badge/icon) (`s390x/groovy` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/groovy/)
 
 # Quick reference
 
@@ -77,7 +77,7 @@ Note that if you are mounting a volume and the uid running Docker is not `1000`,
 
 ## Running a Groovy script
 
-`docker run --rm -v "$PWD":/home/groovy/scripts -w /home/groovy/scripts groovy groovy <script> <script-args>`
+`docker run --rm -v "$PWD":/home/groovy/scripts -w /home/groovy/scripts s390x/groovy groovy <script> <script-args>`
 
 ## Reusing the Grapes cache
 
@@ -85,20 +85,20 @@ The local Grapes cache can be reused across containers by creating a volume and 
 
 ```console
 docker volume create --name grapes-cache
-docker run --rm -it -v grapes-cache:/home/groovy/.groovy/grapes groovy
+docker run --rm -it -v grapes-cache:/home/groovy/.groovy/grapes s390x/groovy
 ```
 
 **Note: Java 9 and Java 10 support is experimental**
 
 # Image Variants
 
-The `groovy` images come in many flavors, each designed for a specific use case.
+The `s390x/groovy` images come in many flavors, each designed for a specific use case.
 
-## `groovy:<version>`
+## `s390x/groovy:<version>`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-## `groovy:<version>-alpine`
+## `s390x/groovy:<version>-alpine`
 
 This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 

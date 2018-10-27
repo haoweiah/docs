@@ -27,6 +27,8 @@ WARNING:
 -	[`18.0.0.3-webProfile7`, `webProfile7` (*ga/18.0.0.3/webProfile7/Dockerfile*)](https://github.com/WASdev/ci.docker/blob/051f60c8158806ddaf3a1a1e1f4fd75fa826ab8a/ga/18.0.0.3/webProfile7/Dockerfile)
 -	[`18.0.0.3-javaee7`, `javaee7` (*ga/18.0.0.3/javaee7/Dockerfile*)](https://github.com/WASdev/ci.docker/blob/051f60c8158806ddaf3a1a1e1f4fd75fa826ab8a/ga/18.0.0.3/javaee7/Dockerfile)
 
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/websphere-liberty/badge/icon) (`s390x/websphere-liberty` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/s390x/job/websphere-liberty/)
+
 # Quick reference
 
 -	**Where to get help**:  
@@ -78,7 +80,7 @@ There are multiple tags available in this repository. The image with the tag `be
 The `kernel` image contains just the Liberty kernel and no additional runtime features. This image can be used as the basis for custom built images that contain only the features required for a specific application. For example, the following Dockerfile starts with this image, copies in the `server.xml` that lists the features required by the application, and then uses the `installUtility` command to download those features from the online repository.
 
 ```dockerfile
-FROM websphere-liberty:kernel
+FROM s390x/websphere-liberty:kernel
 COPY Sample1.war /config/dropins/
 COPY server.xml /config/
 RUN installUtility install --acceptLicense defaultServer
@@ -107,7 +109,7 @@ The images are designed to support a number of different usage patterns. The fol
 	```console
 	$ docker run -d -p 80:9080 -p 443:9443 \
 	    -v /tmp/DefaultServletEngine/dropins/Sample1.war:/config/dropins/Sample1.war \
-	    websphere-liberty:webProfile8
+	    s390x/websphere-liberty:webProfile8
 	```
 
 	When the server is started, you can browse to http://localhost/Sample1/SimpleServlet on the Docker host.
@@ -119,13 +121,13 @@ The images are designed to support a number of different usage patterns. The fol
 	```console
 	$ docker run -d -p 80:9080 \
 	  -v /tmp/DefaultServletEngine:/config \
-	  websphere-liberty:webProfile8
+	  s390x/websphere-liberty:webProfile8
 	```
 
 3.	You can also build an application layer on top of this image by using either the default server configuration or a new server configuration. In this example, we have copied the `Sample1.war` from `/tmp/DefaultServletEngine/dropins` to the same directory as the following Dockerfile.
 
 	```dockerfile
-	FROM websphere-liberty:webProfile8
+	FROM s390x/websphere-liberty:webProfile8
 	COPY Sample1.war /config/dropins/
 	```
 
@@ -141,7 +143,7 @@ The images are designed to support a number of different usage patterns. The fol
 	Build and run the data volume container:
 
 	```dockerfile
-	FROM websphere-liberty:webProfile8
+	FROM s390x/websphere-liberty:webProfile8
 	COPY DefaultServletEngine /config
 	```
 
@@ -155,7 +157,7 @@ The images are designed to support a number of different usage patterns. The fol
 
 	```console
 	$ docker run -d -p 80:9080 \
-	  --volumes-from app websphere-liberty:webProfile8
+	  --volumes-from app s390x/websphere-liberty:webProfile8
 	```
 
 # Using `springBoot` images
@@ -167,13 +169,13 @@ The `springBoot` images introduce capabilities specific to the support of Spring
 	```console
 	$ docker run -d -p 8080:9080 \
 	    -v /tmp/hellospringboot.jar:/config/dropins/spring/hellospringboot.jar \
-	    websphere-liberty:springBoot2
+	    s390x/websphere-liberty:springBoot2
 	```
 
 	Similarly, you can create a Spring Boot application layer over this image by adding the application JAR to the `dropins/spring` directory. In this example we copied `hellospringboot.jar` from `/tmp` to the same directory containing the following Dockerfile.
 
 	```dockerfile
-	FROM websphere-liberty:springBoot2
+	FROM s390x/websphere-liberty:springBoot2
 	COPY hellospringboot.jar /config/dropins/spring/
 	```
 
@@ -201,19 +203,19 @@ The `springBoot` images introduce capabilities specific to the support of Spring
 	$ docker run -d -p 8080:9080 \
 	    -v /tmp/thinhellospringboot.jar:/config/dropins/spring/thinhellospringboot.jar \
 	    -v /tmp/lib.index.cache:/lib.index.cache \
-	    websphere-liberty:springBoot2
+	    s390x/websphere-liberty:springBoot2
 	```
 
 	Similarly, you can use the `springBootUtility` command to create thin application and library cache layers over a `springBoot` image. The following example uses docker staging to efficiently build an image that deploys a fat Spring Boot application as two layers containing a thin application and a library cache.
 
 	```dockerfile
-	FROM websphere-liberty:springBoot2 as staging
+	FROM s390x/websphere-liberty:springBoot2 as staging
 	COPY hellospringboot.jar /staging/myFatApp.jar
 	RUN springBootUtility thin \
 	   --sourceAppPath=/staging/myFatApp.jar \
 	   --targetThinAppPath=/staging/myThinApp.jar \
 	   --targetLibCachePath=/staging/lib.index.cache
-	FROM websphere-liberty:springBoot2
+	FROM s390x/websphere-liberty:springBoot2
 	COPY --from=staging /staging/lib.index.cache /lib.index.cache
 	COPY --from=staging /staging/myThinApp.jar /config/dropins/spring/myThinApp.jar
 	```
@@ -239,7 +241,7 @@ Or, create a named data volume container that exposes a volume at the location o
 
 ```console
 docker run -e LICENSE=accept -v /opt/ibm/wlp/output/.classCache \
-    --name classcache websphere-liberty true
+    --name classcache s390x/websphere-liberty true
 ```
 
 Then, run the WebSphere Liberty image with the volumes from the data volume container classcache mounted as follows:
@@ -255,15 +257,15 @@ Liberty writes to two different directories when running: `/opt/ibm/wlp/output` 
 ```console
 docker run -d -p 80:9080 -p 443:9443 \
     --tmpfs /opt/ibm/wlp/output --tmpfs /logs -v /config --read-only \
-    websphere-liberty:javaee8
+    s390x/websphere-liberty:javaee8
 ```
 
 # Changing locale
 
-The base Ubuntu image does not include additional language packs. To use an alternative locale, build your own image that installs the required language pack and then sets the `LANG` environment variable. For example, the following Dockerfile starts with the `websphere-liberty:webProfile8` image, installs the Portuguese language pack, and sets Brazilian Portuguese as the default locale:
+The base Ubuntu image does not include additional language packs. To use an alternative locale, build your own image that installs the required language pack and then sets the `LANG` environment variable. For example, the following Dockerfile starts with the `s390x/websphere-liberty:webProfile8` image, installs the Portuguese language pack, and sets Brazilian Portuguese as the default locale:
 
 ```dockerfile
-FROM websphere-liberty:webProfile8
+FROM s390x/websphere-liberty:webProfile8
 RUN apt-get update \
   && apt-get install -y language-pack-pt-base \
   && rm -rf /var/lib/apt/lists/*

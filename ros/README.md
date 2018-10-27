@@ -16,10 +16,6 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`indigo-ros-core`, `indigo-ros-core-trusty` (*ros/indigo/ubuntu/trusty/ros-core/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/indigo/ubuntu/trusty/ros-core/Dockerfile)
--	[`indigo-ros-base`, `indigo-ros-base-trusty`, `indigo` (*ros/indigo/ubuntu/trusty/ros-base/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/indigo/ubuntu/trusty/ros-base/Dockerfile)
--	[`indigo-robot`, `indigo-robot-trusty` (*ros/indigo/ubuntu/trusty/robot/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/indigo/ubuntu/trusty/robot/Dockerfile)
--	[`indigo-perception`, `indigo-perception-trusty` (*ros/indigo/ubuntu/trusty/perception/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/indigo/ubuntu/trusty/perception/Dockerfile)
 -	[`kinetic-ros-core`, `kinetic-ros-core-xenial` (*ros/kinetic/ubuntu/xenial/ros-core/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
 -	[`kinetic-ros-base`, `kinetic-ros-base-xenial`, `kinetic` (*ros/kinetic/ubuntu/xenial/ros-base/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/kinetic/ubuntu/xenial/ros-base/Dockerfile)
 -	[`kinetic-robot`, `kinetic-robot-xenial` (*ros/kinetic/ubuntu/xenial/robot/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/kinetic/ubuntu/xenial/robot/Dockerfile)
@@ -40,6 +36,8 @@ WARNING:
 -	[`melodic-ros-base-stretch` (*ros/melodic/debian/stretch/ros-base/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/melodic/debian/stretch/ros-base/Dockerfile)
 -	[`melodic-robot-stretch` (*ros/melodic/debian/stretch/robot/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/melodic/debian/stretch/robot/Dockerfile)
 -	[`melodic-perception-stretch` (*ros/melodic/debian/stretch/perception/Dockerfile*)](https://github.com/osrf/docker_images/blob/49d22242e02e9c541a9e85b657e1785617b6f470/ros/melodic/debian/stretch/perception/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/arm64v8/job/ros/badge/icon) (`arm64v8/ros` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/arm64v8/job/ros/)
 
 # Quick reference
 
@@ -82,7 +80,7 @@ The Robot Operating System (ROS) is a set of software libraries and tools that h
 ## Create a `Dockerfile` in your ROS app project
 
 ```dockerfile
-FROM ros:indigo
+FROM arm64v8/ros:indigo
 # place here your application's setup specifics
 CMD [ "roslaunch", "my-ros-app my-ros-app.launch" ]
 ```
@@ -120,7 +118,7 @@ ROS uses the `~/.ros/` directory for storing logs, and debugging info. If you wi
 For example, if one wishes to use their own `.ros` folder that already resides in their local home directory, with a username of `ubuntu`, we can simple launch the container with an additional volume argument:
 
 ```console
-$ docker run -v "/home/ubuntu/.ros/:/root/.ros/" ros
+$ docker run -v "/home/ubuntu/.ros/:/root/.ros/" arm64v8/ros
 ```
 
 ### Devices
@@ -140,7 +138,7 @@ If we want our all ROS nodes to easily talk to each other, we'll can use a virtu
 > Build a ROS image that includes ROS tutorials using this `Dockerfile:`
 
 ```dockerfile
-FROM ros:indigo-ros-base
+FROM arm64v8/ros:indigo-ros-base
 # install ros tutorials packages
 RUN apt-get update && apt-get install -y \
     ros-indigo-ros-tutorials \
@@ -151,7 +149,7 @@ RUN apt-get update && apt-get install -y \
 > Then to build the image from within the same directory:
 
 ```console
-$ docker build --tag ros:ros-tutorials .
+$ docker build --tag arm64v8/ros:ros-tutorials .
 ```
 
 #### Create network
@@ -170,7 +168,7 @@ $ docker build --tag ros:ros-tutorials .
 $ docker run -it --rm \
     --net foo \
     --name master \
-    ros:ros-tutorials \
+    arm64v8/ros:ros-tutorials \
     roscore
 ```
 
@@ -182,7 +180,7 @@ $ docker run -it --rm \
     --name talker \
     --env ROS_HOSTNAME=talker \
     --env ROS_MASTER_URI=http://master:11311 \
-    ros:ros-tutorials \
+    arm64v8/ros:ros-tutorials \
     rosrun roscpp_tutorials talker
 ```
 
@@ -194,7 +192,7 @@ $ docker run -it --rm \
     --name listener \
     --env ROS_HOSTNAME=listener \
     --env ROS_MASTER_URI=http://master:11311 \
-    ros:ros-tutorials \
+    arm64v8/ros:ros-tutorials \
     rosrun roscpp_tutorials listener
 ```
 

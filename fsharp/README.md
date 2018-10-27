@@ -17,9 +17,8 @@ WARNING:
 # Supported tags and respective `Dockerfile` links
 
 -	[`latest`, `10`, `10.2`, `10.2.1` (*10.2.1/mono/Dockerfile*)](https://github.com/fsprojects/docker-fsharp/blob/f495db3a791138b7d2b196753874aa1e4312ba8e/10.2.1/mono/Dockerfile)
--	[`4`, `4.1`, `4.1.34` (*4.1.34/mono/Dockerfile*)](https://github.com/fsprojects/docker-fsharp/blob/f495db3a791138b7d2b196753874aa1e4312ba8e/4.1.34/mono/Dockerfile)
--	[`4.0`, `4.0.1`, `4.0.1.1` (*4.0.1.1/Dockerfile*)](https://github.com/fsprojects/docker-fsharp/blob/f495db3a791138b7d2b196753874aa1e4312ba8e/4.0.1.1/Dockerfile)
--	[`netcore`, `10-netcore`, `10.2-netcore`, `10.2.1-netcore` (*10.2.1/netcore/Dockerfile*)](https://github.com/fsprojects/docker-fsharp/blob/f495db3a791138b7d2b196753874aa1e4312ba8e/10.2.1/netcore/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/arm64v8/job/fsharp/badge/icon) (`arm64v8/fsharp` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/arm64v8/job/fsharp/)
 
 # Quick reference
 
@@ -64,7 +63,7 @@ F# (pronounced F sharp) is a strongly typed, multi-paradigm programming language
 The most straightforward way to use this image is to use it both as the build and runtime environment. In your `Dockerfile`, you can write something similar to the following:
 
 ```dockerfile
-FROM fsharp
+FROM arm64v8/fsharp
 COPY . /app
 RUN xbuild /app/myproject.sln
 ```

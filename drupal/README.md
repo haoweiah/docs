@@ -16,15 +16,11 @@ WARNING:
 
 # Supported tags and respective `Dockerfile` links
 
--	[`8.6.2-apache`, `8.6-apache`, `8-apache`, `apache`, `8.6.2`, `8.6`, `8`, `latest` (*8.6/apache/Dockerfile*)](https://github.com/docker-library/drupal/blob/48eb0d321cb472d76de0cf552192ee044f568ebe/8.6/apache/Dockerfile)
--	[`8.6.2-fpm`, `8.6-fpm`, `8-fpm`, `fpm` (*8.6/fpm/Dockerfile*)](https://github.com/docker-library/drupal/blob/48eb0d321cb472d76de0cf552192ee044f568ebe/8.6/fpm/Dockerfile)
 -	[`8.6.2-fpm-alpine`, `8.6-fpm-alpine`, `8-fpm-alpine`, `fpm-alpine` (*8.6/fpm-alpine/Dockerfile*)](https://github.com/docker-library/drupal/blob/48eb0d321cb472d76de0cf552192ee044f568ebe/8.6/fpm-alpine/Dockerfile)
--	[`8.5.8-apache`, `8.5-apache`, `8.5.8`, `8.5` (*8.5/apache/Dockerfile*)](https://github.com/docker-library/drupal/blob/8a9569a2d2e9ded138454b34ae043afd0bdb2660/8.5/apache/Dockerfile)
--	[`8.5.8-fpm`, `8.5-fpm` (*8.5/fpm/Dockerfile*)](https://github.com/docker-library/drupal/blob/8a9569a2d2e9ded138454b34ae043afd0bdb2660/8.5/fpm/Dockerfile)
 -	[`8.5.8-fpm-alpine`, `8.5-fpm-alpine` (*8.5/fpm-alpine/Dockerfile*)](https://github.com/docker-library/drupal/blob/8a9569a2d2e9ded138454b34ae043afd0bdb2660/8.5/fpm-alpine/Dockerfile)
--	[`7.60-apache`, `7-apache`, `7.60`, `7` (*7/apache/Dockerfile*)](https://github.com/docker-library/drupal/blob/978f4a2b3b187dcf105d9c40cfd6b84ea8597850/7/apache/Dockerfile)
--	[`7.60-fpm`, `7-fpm` (*7/fpm/Dockerfile*)](https://github.com/docker-library/drupal/blob/978f4a2b3b187dcf105d9c40cfd6b84ea8597850/7/fpm/Dockerfile)
 -	[`7.60-fpm-alpine`, `7-fpm-alpine` (*7/fpm-alpine/Dockerfile*)](https://github.com/docker-library/drupal/blob/978f4a2b3b187dcf105d9c40cfd6b84ea8597850/7/fpm-alpine/Dockerfile)
+
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v6/job/drupal/badge/icon) (`arm32v6/drupal` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/arm32v6/job/drupal/)
 
 # Quick reference
 
@@ -67,13 +63,13 @@ Drupal is a free and open-source content-management framework written in PHP and
 The basic pattern for starting a `drupal` instance is:
 
 ```console
-$ docker run --name some-drupal -d drupal
+$ docker run --name some-drupal -d arm32v6/drupal
 ```
 
 If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
 
 ```console
-$ docker run --name some-drupal -p 8080:80 -d drupal
+$ docker run --name some-drupal -p 8080:80 -d arm32v6/drupal
 ```
 
 Then, access it via `http://localhost:8080` or `http://host-ip:8080` in a browser.
@@ -85,7 +81,7 @@ When first accessing the webserver provided by this image, it will go through a 
 ## MySQL
 
 ```console
-$ docker run --name some-drupal --link some-mysql:mysql -d drupal
+$ docker run --name some-drupal --link some-mysql:mysql -d arm32v6/drupal
 ```
 
 -	Database type: `MySQL, MariaDB, or equivalent`
@@ -95,7 +91,7 @@ $ docker run --name some-drupal --link some-mysql:mysql -d drupal
 ## PostgreSQL
 
 ```console
-$ docker run --name some-drupal --link some-postgres:postgres -d drupal
+$ docker run --name some-drupal --link some-postgres:postgres -d arm32v6/drupal
 ```
 
 -	Database type: `PostgreSQL`
@@ -111,7 +107,7 @@ There is consensus that `/var/www/html/modules`, `/var/www/html/profiles`, and `
 If using bind-mounts, one way to accomplish pre-seeding your local `sites` directory would be something like the following:
 
 ```console
-$ docker run --rm drupal tar -cC /var/www/html/sites . | tar -xC /path/on/host/sites
+$ docker run --rm arm32v6/drupal tar -cC /var/www/html/sites . | tar -xC /path/on/host/sites
 ```
 
 This can then be bind-mounted into a new container:
@@ -122,20 +118,20 @@ $ docker run --name some-drupal --link some-postgres:postgres -d \
 	-v /path/on/host/profiles:/var/www/html/profiles \
 	-v /path/on/host/sites:/var/www/html/sites \
 	-v /path/on/host/themes:/var/www/html/themes \
-	drupal
+	arm32v6/drupal
 ```
 
 Another solution using Docker Volumes:
 
 ```console
 $ docker volume create drupal-sites
-$ docker run --rm -v drupal-sites:/temporary/sites drupal cp -aRT /var/www/html/sites /temporary/sites
+$ docker run --rm -v drupal-sites:/temporary/sites arm32v6/drupal cp -aRT /var/www/html/sites /temporary/sites
 $ docker run --name some-drupal --link some-postgres:postgres -d \
 	-v drupal-modules:/var/www/html/modules \
 	-v drupal-profiles:/var/www/html/profiles \
 	-v drupal-sites:/var/www/html/sites \
 	-v drupal-themes:/var/www/html/themes \
-	drupal
+	arm32v6/drupal
 ```
 
 ## ... via [`docker stack deploy`](https://docs.docker.com/engine/reference/commandline/stack_deploy/) or [`docker-compose`](https://github.com/docker/compose)
@@ -201,13 +197,13 @@ See [the "Running as an arbitrary user" section of the `php` image documentation
 
 # Image Variants
 
-The `drupal` images come in many flavors, each designed for a specific use case.
+The `arm32v6/drupal` images come in many flavors, each designed for a specific use case.
 
-## `drupal:<version>`
+## `arm32v6/drupal:<version>`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-## `drupal:<version>-alpine`
+## `arm32v6/drupal:<version>-alpine`
 
 This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 

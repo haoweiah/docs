@@ -20,6 +20,8 @@ WARNING:
 -	[`1.7.2-fpm`, `1.7-fpm`, `1-fpm`, `fpm` (*1.7.2/fpm/Dockerfile*)](https://github.com/YOURLS/docker-yourls/blob/6d66e2a1f1bebd2faee9ac97b8c1d449e6d80f99/1.7.2/fpm/Dockerfile)
 -	[`1.7.2-fpm-alpine`, `1.7-fpm-alpine`, `1-fpm-alpine`, `fpm-alpine` (*1.7.2/fpm-alpine/Dockerfile*)](https://github.com/YOURLS/docker-yourls/blob/6d66e2a1f1bebd2faee9ac97b8c1d449e6d80f99/1.7.2/fpm-alpine/Dockerfile)
 
+[![Build Status](https://doi-janky.infosiftr.net/job/multiarch/job/i386/job/yourls/badge/icon) (`i386/yourls` build job)](https://doi-janky.infosiftr.net/job/multiarch/job/i386/job/yourls/)
+
 # Quick reference
 
 -	**Where to get help**:  
@@ -61,7 +63,7 @@ YOURLS is a set of PHP scripts that will allow you to run Your Own URL Shortener
 ```console
 $ docker run --name some-yourls --link some-mysql:mysql \
     -e YOURLS_SITE="https://example.com" \
-    -d yourls
+    -d i386/yourls
 ```
 
 The following environment variables are also honored for configuring your YOURLS instance:
@@ -79,7 +81,7 @@ If the `YOURLS_DB_NAME` specified does not already exist on the given MySQL serv
 If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
 
 ```console
-$ docker run --name some-yourls --link some-mysql:mysql -p 8080:80 -d yourls
+$ docker run --name some-yourls --link some-mysql:mysql -p 8080:80 -d i386/yourls
 ```
 
 Then, access it via `http://localhost:8080` or `http://host-ip:8080` in a browser.
@@ -88,7 +90,7 @@ If you'd like to use an external database instead of a linked `mysql` container,
 
 ```console
 $ docker run --name some-yourlss -e YOURLS_DB_HOST=10.1.2.3:3306 \
-    -e YOURLS_DB_USER=... -e YOURLS_DB_PASS=... -d yourls
+    -e YOURLS_DB_USER=... -e YOURLS_DB_PASS=... -d i386/yourls
 ```
 
 ## ... via [`docker stack deploy`](https://docs.docker.com/engine/reference/commandline/stack_deploy/) or [`docker-compose`](https://github.com/docker/compose)
@@ -133,13 +135,13 @@ The following Docker Hub features can help with the task of keeping your depende
 
 # Image Variants
 
-The `yourls` images come in many flavors, each designed for a specific use case.
+The `i386/yourls` images come in many flavors, each designed for a specific use case.
 
-## `yourls:<version>`
+## `i386/yourls:<version>`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is designed to be used both as a throw away container (mount your source code and start the container to start your app), as well as the base to build other images off of.
 
-## `yourls:<version>-alpine`
+## `i386/yourls:<version>-alpine`
 
 This image is based on the popular [Alpine Linux project](http://alpinelinux.org), available in [the `alpine` official image](https://hub.docker.com/_/alpine). Alpine Linux is much smaller than most distribution base images (~5MB), and thus leads to much slimmer images in general.
 
